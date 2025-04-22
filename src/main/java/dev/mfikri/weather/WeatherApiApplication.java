@@ -2,9 +2,13 @@ package dev.mfikri.weather;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.client.RestTemplate;
 
-@ServletComponentScan
+import java.time.Duration;
+
 @SpringBootApplication
 public class WeatherApiApplication {
 
@@ -12,4 +16,11 @@ public class WeatherApiApplication {
         SpringApplication.run(WeatherApiApplication.class, args);
     }
 
+    @Bean
+    public RestTemplate restTemplate(RestTemplateBuilder builder) {
+        return builder
+                .connectTimeout(Duration.ofSeconds(5L)) // max waiting connection established
+                .readTimeout(Duration.ofSeconds(10L)) // max waiting the server to process our request
+                .build();
+    }
 }
