@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: weather-api
+  data:
+    redis:
+      host: "192.168.1.12"
+      port: 6379
+      username: ${REDIS_USERNAME}
+      password: ${REDIS_PASSWORD}
+      database: 1
+      timeout: 5s
+      connect-timeout: 5s
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: off

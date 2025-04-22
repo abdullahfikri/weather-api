@@ -1,5 +1,7 @@
 package dev.mfikri.weather.controller;
 
+import dev.mfikri.weather.model.WeatherModel;
+import dev.mfikri.weather.model.WebResponse;
 import dev.mfikri.weather.service.WeatherService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -7,14 +9,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 
 import java.io.IOException;
 @RestController
-@RequestMapping("/weathers")
 public class WeatherController {
 
     private final WeatherService service;
@@ -23,13 +24,14 @@ public class WeatherController {
         this.service = service;
     }
 
-    @GetMapping("")
-    public void getWeather () {
-        try {
-            service.getWeather();
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+    @GetMapping(path = "/weathers",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<WebResponse<WeatherModel>> getWeather (@RequestParam("city") String city,
+                                                                @RequestParam String country) {
+            WeatherModel weather = service.getWeather(city, country);
+            return ResponseEntity.ok(new WebResponse<>(weather));
+
     }
 
 
