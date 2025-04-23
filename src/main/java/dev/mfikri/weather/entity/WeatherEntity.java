@@ -1,4 +1,4 @@
-package dev.mfikri.weather.model;
+package dev.mfikri.weather.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class WeatherModel{
+public class WeatherEntity {
     private double latitude;
     private double longitude;
     private String resolvedAddress;

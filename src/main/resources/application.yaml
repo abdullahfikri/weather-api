@@ -3,6 +3,7 @@ spring:
     name: weather-api
   data:
     redis:
+      client-type: lettuce
       host: "192.168.1.12"
       port: 6379
       username: ${REDIS_USERNAME}
@@ -13,3 +14,13 @@ spring:
   jackson:
     deserialization:
       fail-on-unknown-properties: off
+
+
+server:
+  error:
+    whitelabel:
+      enabled: false
+
+springdoc:
+  api-docs:
+    path: /api-docs
